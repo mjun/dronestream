@@ -22,4 +22,4 @@ venv/
 .idea/
 
 # SQlite
-*.db
+*.sqlite3
