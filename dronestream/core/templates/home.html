@@ -1,0 +1,57 @@
+{% extends "bootstrap4_base.html" %}
+{% load i18n static jsonparse %}
+
+{% block title %}{% trans "Dronestream" %} | {% trans "Map" %}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static "css/fontawesome-all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.standalone.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">{% trans "Dronestream" %}</a>
+        <div class="navbar-expand mr-auto">
+            <ul class="navbar-nav">
+                <li class="search-bar">
+                    <span class="nav-link">
+                        <input type="text" placeholder="Search...">
+                    </span>
+                </li>
+                <li class="search-button">
+                    <a class="nav-link" href="#"><i class="fa fa-lg fa-search"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container-fluid">
+        <div id="map"></div>
+        <div id="filter" class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+            <div class="card-header"><i class="fa fa-filter"></i> Filter</div>
+            <div class="card-body">
+                <form>
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="date-from">{% trans "Date From" %}</label>
+                            <input id="date-from" name="date-from" type="text" class="form-control datepicker">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block extrascript %}
+    <script src="{% static "js/bootstrap-datepicker.min.js" %}"></script>
+    <script src="{% static "js/moment.min.js" %}"></script>
+    <script>
+        var strike_data = {{ strikes | json | safe }};
+    </script>
+    <script src="{% static "js/home.js" %}"></script>
+    <script src="{% static "js/google.maps.markerclusterer.min.js" %}"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>
+{% endblock %}

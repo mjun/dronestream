@@ -1,0 +1,31 @@
+{# Bootstrap v4 starter template: https://getbootstrap.com/docs/4.0/getting-started/introduction/#starter-template #}
+{% load i18n static %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:"en" }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.lumen.min.css" %}">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    {% block extrastyle %}{% endblock %}
+
+    <title>{% block title %}{% endblock %}</title>
+    {% block extrahead %}{% endblock %}
+</head>
+<body>
+{% block content %}{% endblock %}
+
+<script src="{% static "js/jquery-3.2.1.slim.min.js" %}"></script>
+<script src="{% static "js/popper.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+{% block extrascript %}{% endblock %}
+</body>
+</html>
