@@ -1,0 +1,89 @@
+<fieldset>
+    <div class="form-group {% if form.date_from.errors %}has-danger{% endif %}">
+        <label for="{{ form.date_from.id_for_label }}" class="control-label">Date From</label>
+        <input id="{{ form.date_from.id_for_label }}" name="{{ form.date_from.name }}"
+               value="{{ form.date_from.value }}" type="text"
+               class="form-control {% if form.date_from.errors %}is-invalid{% endif %}">
+        {% if form.date_from.errors %}
+            <div class="invalid-feedback">{{ form.date_from.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group {% if form.date_to.errors %}has-danger{% endif %}">
+        <label for="{{ form.date_to.id_for_label }}" class="control-label">Date To</label>
+        <input id="{{ form.date_to.id_for_label }}" name="{{ form.date_to.name }}" value="{{ form.date_to.value }}"
+               type="text" class="form-control {% if form.date_to.errors %}is-invalid{% endif %}">
+        {% if form.date_to.errors %}
+            <div class="invalid-feedback">{{ form.date_to.errors }}</div>{% endif %}
+    </div>
+
+    <div class="form-group {% if form.country.errors %}has-danger{% endif %}">
+        <label for="{{ form.country.id_for_label }}">Country</label>
+        <select id="{{ form.country.id_for_label }}" name="{{ form.country.name }}"
+                class="form-control {% if form.country.errors %}is-invalid{% endif %}">
+            {% for choice in form.country.field.choices %}
+                <option value="{{ choice.0 }}"
+                        {% if form.country.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+            {% endfor %}
+        </select>
+        {% if form.country.errors %}
+            <div class="invalid-feedback">{{ form.country.errors }}</div>{% endif %}
+    </div>
+
+    {% if form.country.value and form.province.field.choices %}
+        <div class="form-group {% if form.province.errors %}has-danger{% endif %}">
+            <label for="{{ form.province.id_for_label }}">Province</label>
+            <select id="{{ form.province.id_for_label }}" name="{{ form.province.name }}"
+                    class="form-control {% if form.province.errors %}is-invalid{% endif %}">
+                {% for choice in form.province.field.choices %}
+                    <option value="{{ choice.0 }}"
+                            {% if form.province.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+            {% if form.province.errors %}
+                <div class="invalid-feedback">{{ form.province.errors }}</div>{% endif %}
+        </div>
+    {% endif %}
+
+    {% if form.province.value and form.town.field.choices %}
+        <div class="form-group {% if form.town.errors %}has-danger{% endif %}">
+            <label for="{{ form.town.id_for_label }}">Town</label>
+            <select id="{{ form.town.id_for_label }}" name="{{ form.town.name }}"
+                    class="form-control {% if form.town.errors %}is-invalid{% endif %}">
+                {% for choice in form.town.field.choices %}
+                    <option value="{{ choice.0 }}"
+                            {% if form.town.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+            {% if form.town.errors %}
+                <div class="invalid-feedback">{{ form.town.errors }}</div>{% endif %}
+        </div>
+    {% endif %}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+    <script>
+        (function () {
+            $("#{{ form.date_from.id_for_label }}").datetimepicker({allowInputToggle: true, format: "L"});
+            $("#{{ form.date_to.id_for_label }}").datetimepicker({allowInputToggle: true, format: "L"});
+
+            $("#{{ form.country.id_for_label }}").change(function () {
+                if (!$(this).val()) {
+                    $("#{{ form.province.id_for_label }}").parent().remove();
+                    $("#{{ form.town.id_for_label }}").parent().remove();
+                } else {
+                    $(this).parents("form").submit();
+                }
+            });
+
+            $("#{{ form.province.id_for_label }}").change(function () {
+                if (!$(this).val()) {
+                    $("#{{ form.town.id_for_label }}").parent().remove();
+                } else {
+                    $(this).parents("form").submit();
+                }
+            });
+        })();
+    </script>
+</fieldset>

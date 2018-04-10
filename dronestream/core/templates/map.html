@@ -5,8 +5,8 @@
 
 {% block extrastyle %}
     <link rel="stylesheet" href="{% static "css/fontawesome-all.min.css" %}">
-    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.standalone.min.css" %}">
-    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/map.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -14,13 +14,8 @@
         <a class="navbar-brand" href="#">{% trans "Dronestream" %}</a>
         <div class="navbar-expand mr-auto">
             <ul class="navbar-nav">
-                <li class="search-bar">
-                    <span class="nav-link">
-                        <input type="text" placeholder="Search...">
-                    </span>
-                </li>
                 <li class="search-button">
-                    <a class="nav-link" href="#"><i class="fa fa-lg fa-search"></i></a>
+                    <a class="nav-link" href="#"><i class="fa fa-search"></i> Search</a>
                 </li>
             </ul>
         </div>
@@ -28,16 +23,11 @@
 
     <main role="main" class="container-fluid">
         <div id="map"></div>
-        <div id="filter" class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+        <div id="filter" class="card text-white bg-dark">
             <div class="card-header"><i class="fa fa-filter"></i> Filter</div>
             <div class="card-body">
-                <form>
-                    <fieldset>
-                        <div class="form-group">
-                            <label for="date-from">{% trans "Date From" %}</label>
-                            <input id="date-from" name="date-from" type="text" class="form-control datepicker">
-                        </div>
-                    </fieldset>
+                <form id="strike-filters-form" action="." method="get">
+                    {% include "map_filters.html" %}
                 </form>
             </div>
         </div>
@@ -45,12 +35,12 @@
 {% endblock %}
 
 {% block extrascript %}
-    <script src="{% static "js/bootstrap-datepicker.min.js" %}"></script>
-    <script src="{% static "js/moment.min.js" %}"></script>
+    <script src="{% static "js/moment-with-locales.js" %}"></script>
+    <script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
     <script>
         var strike_data = {{ strikes | json | safe }};
     </script>
-    <script src="{% static "js/home.js" %}"></script>
+    <script src="{% static "js/map.js" %}"></script>
     <script src="{% static "js/google.maps.markerclusterer.min.js" %}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>

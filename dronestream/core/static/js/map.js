@@ -37,4 +37,3 @@ function initMap() {
     var markerCluster = new MarkerClusterer(map, markers);
 
 }
-

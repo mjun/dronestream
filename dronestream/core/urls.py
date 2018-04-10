@@ -1,7 +1,7 @@
 from django.urls import path
 
-from dronestream.core.views import HomeView
+from dronestream.core.views import MapView
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('', MapView.as_view(), name='home'),
 ]
