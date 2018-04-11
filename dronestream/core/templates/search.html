@@ -1,0 +1,88 @@
+{% extends "bootstrap4_base.html" %}
+{% load i18n static highlight %}
+
+{% block title %}{% trans "Dronestream" %} | {% trans "Search" %}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static "css/fontawesome-all.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/search.css" %}">
+{% endblock %}
+
+{% block extrascript %}
+    <script src="{% static "js/search.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">{% trans "Dronestream" %}</a>
+        <div class="navbar-expand mr-auto">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link" href="{% url 'map' %}"><i class="fa fa-map-marker-alt"></i> {% trans "Map" %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container-fluid">
+        <div class="jumbotron text-center">
+            <div class="container">
+                <form action="{% url 'search' %}" method="get">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control"
+                               {% if search_string %}value="{{ search_string }}"{% endif %}
+                               placeholder="Search locations and narratives">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="container">
+                {% if strikes %}
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{% trans 'ID' %}</th>
+                            <th scope="col">{% trans 'Country' %}</th>
+                            <th scope="col">{% trans 'Province' %}</th>
+                            <th scope="col">{% trans 'Town' %}</th>
+                            <th scope="col">{% trans 'Narrative' %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for strike in strikes %}
+                            <tr>
+                                <td>{{ strike.id }}</td>
+                                <td>{{ strike.country.name | highlight:search_terms | safe }}</td>
+                                <td>{{ strike.province.name | highlight:search_terms | safe }}</td>
+                                <td>{{ strike.town.name | highlight:search_terms | safe }}</td>
+                                <td>{{ strike.narrative | highlight:search_terms | safe }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-warning">
+                        <p class="mb-0">{% trans "Please enter a search term in the search box above." %} {% trans "For example:" %}
+                            <i>Drone</i>,
+                            <i>people</i>, <i>Yemen</i>.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="loading-overlay">
+            <div class="loading-overlay-container">
+                <div class="overlay-content">
+                    <i class="fa fa-circle-notch fa-spin fa-5x"></i>
+                </div>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

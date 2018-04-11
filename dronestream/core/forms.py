@@ -1,3 +1,5 @@
+import datetime
+
 from dateutil.relativedelta import relativedelta
 from django import forms
 from django.db.models import Max
@@ -25,7 +27,8 @@ class StrikeFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if not self.data:
-            self.fields['date_to'].initial = Strike.objects.all().aggregate(Max('date'))['date__max']
+            self.fields['date_to'].initial = Strike.objects.all().aggregate(Max('date'))[
+                                                 'date__max'] or datetime.date.today()
             self.fields['date_from'].initial = self.fields['date_to'].initial - relativedelta(months=3)
         else:
             if 'country' in self.data and self.data['country']:

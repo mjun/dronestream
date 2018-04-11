@@ -9,31 +9,6 @@
     <link rel="stylesheet" href="{% static "css/map.css" %}">
 {% endblock %}
 
-{% block content %}
-    <nav class="navbar navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">{% trans "Dronestream" %}</a>
-        <div class="navbar-expand mr-auto">
-            <ul class="navbar-nav">
-                <li class="search-button">
-                    <a class="nav-link" href="#"><i class="fa fa-search"></i> Search</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <main role="main" class="container-fluid">
-        <div id="map"></div>
-        <div id="filter" class="card text-white bg-dark">
-            <div class="card-header"><i class="fa fa-filter"></i> Filter</div>
-            <div class="card-body">
-                <form id="strike-filters-form" action="." method="get">
-                    {% include "map_filters.html" %}
-                </form>
-            </div>
-        </div>
-    </main>
-{% endblock %}
-
 {% block extrascript %}
     <script src="{% static "js/moment-with-locales.js" %}"></script>
     <script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
@@ -44,4 +19,29 @@
     <script src="{% static "js/google.maps.markerclusterer.min.js" %}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">{% trans "Dronestream" %}</a>
+        <div class="navbar-expand mr-auto">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link" href="{% url 'search' %}"><i class="fa fa-search"></i> {% trans "Search" %}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container-fluid">
+        <div id="map"></div>
+        <div id="filter" class="card text-white bg-dark">
+            <div class="card-header"><i class="fa fa-filter"></i> Filter</div>
+            <div class="card-body">
+                <form action="{% url 'map' %}" method="get">
+                    {% include "map_filters.html" %}
+                </form>
+            </div>
+        </div>
+    </main>
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.views.generic import ListView
 
 from dronestream.core.forms import StrikeFilterForm
@@ -60,4 +61,39 @@ class MapView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form
+
+        return context
+
+
+class SearchView(ListView):
+    model = Strike
+    template_name = "search.html"
+    context_object_name = "strikes"
+
+    search_string = ""
+    search_terms = []
+
+    def get(self, request, *args, **kwargs):
+        self.search_string = request.GET.get('q', "").strip()
+        if self.search_string:
+            self.search_terms = self.search_string.split()
+
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        if self.search_terms:
+            q_filters = Q()
+            for term in self.search_terms:
+                q_filters |= Q(country__name__icontains=term) | Q(province__name__icontains=term) | Q(
+                    town__name__icontains=term) | Q(narrative__icontains=term)
+
+            return Strike.objects.filter(q_filters)
+        else:
+            return Strike.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_terms'] = self.search_terms
+        context['search_string'] = self.search_string
+
         return context
