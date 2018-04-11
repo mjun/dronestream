@@ -133,7 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Google API keys
 # https://developers.google.com/maps/documentation/javascript/get-api-key
-GOOGLE_MAPS_API_KEY = 'AIzaSyDaibPElGDl6PiSNYOnqD17Qkwmjtx4ECk'
+GOOGLE_MAPS_API_KEY = ''
 
 # https://api.dronestre.am/
 DRONESTREAM_API_URL = "https://api.dronestre.am/data"
