@@ -73,6 +73,8 @@
                     $("#{{ form.province.id_for_label }}").parent().remove();
                     $("#{{ form.town.id_for_label }}").parent().remove();
                 } else {
+                    $("#{{ form.province.id_for_label }}").val('');
+                    $("#{{ form.town.id_for_label }}").val('');
                     $(this).parents("form").submit();
                 }
             });
@@ -81,6 +83,7 @@
                 if (!$(this).val()) {
                     $("#{{ form.town.id_for_label }}").parent().remove();
                 } else {
+                    $("#{{ form.town.id_for_label }}").val('');
                     $(this).parents("form").submit();
                 }
             });

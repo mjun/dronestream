@@ -34,6 +34,8 @@ function initMap() {
         return marker;
     });
 
-    var markerCluster = new MarkerClusterer(map, markers);
+    var markerCluster = new MarkerClusterer(map, markers, {
+        maxZoom: 20
+    });
 
 }

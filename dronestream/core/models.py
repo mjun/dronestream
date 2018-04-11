@@ -38,7 +38,7 @@ class Town(models.Model):
 
 
 class Strike(models.Model):
-    dronestream_id = models.CharField(verbose_name=_("Datastream ID"), max_length=80, unique=True)
+    dronestream_id = models.CharField(verbose_name=_("Dronestream ID"), max_length=80, unique=True)
     number = models.BigIntegerField(verbose_name=_("Number"), unique=True)
     date = models.DateField(verbose_name=_("Date"))
     narrative = models.CharField(verbose_name=_("Narrative"), max_length=140)

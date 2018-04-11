@@ -1,6 +1,7 @@
 import decimal
 
 import requests
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.utils import dateparse
 
@@ -62,11 +63,9 @@ def _parse_names(strike_names):
 class Command(BaseCommand):
     help = "Imports drone strike data from https://api.dronestre.am/data"
 
-    DRONESTREAM_API_URL = "https://api.dronestre.am/data"
-
     def handle(self, *args, **options):
         try:
-            dronestream_request = requests.get(self.DRONESTREAM_API_URL)
+            dronestream_request = requests.get(settings.DRONESTREAM_API_URL)
         except requests.exceptions.ConnectionError:
             self.stderr.write(self.style.ERROR("Unable to load Dronestream JSON data. Failed to establish connection."))
             return

@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
             name='Strike',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('dronestream_id', models.CharField(max_length=80, unique=True, verbose_name='Datastream ID')),
+                ('dronestream_id', models.CharField(max_length=80, unique=True, verbose_name='Dronestream ID')),
                 ('number', models.BigIntegerField(unique=True, verbose_name='Number')),
                 ('date', models.DateField(verbose_name='Date')),
                 ('narrative', models.CharField(max_length=140, verbose_name='Narrative')),
